@@ -6,13 +6,13 @@ import dev.bozlak.logistic_regression_api.logistic_regression.exceptions.WeightA
 
 public class LogisticRegression {
 
-    protected final double[][] inputs;
+    protected final Double[][] inputs;
 
     /**
      * For Output array:
      * Let true === 1 class, false === 0 class
      */
-    protected final boolean[] outputs;
+    protected final Boolean[] outputs;
     private final int m;
     private final int n;
 
@@ -20,7 +20,7 @@ public class LogisticRegression {
      * For Output array:
      * Let true === 1 class, false === 0 class
      */
-    public LogisticRegression(double[][] inputs, boolean[] outputs) {
+    public LogisticRegression(Double[][] inputs, Boolean[] outputs) {
 //        this.m = this.validateDatas(inputs, outputs);
         this.m = inputs.length;
 
@@ -31,10 +31,10 @@ public class LogisticRegression {
 
     public double costFunction(
             InsideFuncForSigmoidFunction insideFuncForSigmoidFunction,
-            double[] weights,
-            double bias
+            Double[] weights,
+            Double bias
     ) {
-//        this.areWeightsCountEqualN(weights);
+//        this.areWeightsCountEqualN(scaledWeights);
 
         double cost = 0.;
         for (int i = 0; i < this.m; i++){
@@ -45,8 +45,8 @@ public class LogisticRegression {
 
     public double J(
             InsideFuncForSigmoidFunction insideFuncForSigmoidFunction,
-            double[] weights,
-            double bias
+            Double[] weights,
+            Double bias
     ) {
         return this.costFunction(insideFuncForSigmoidFunction, weights, bias);
     }
@@ -54,10 +54,10 @@ public class LogisticRegression {
     private double lossFunction(
             int iThData,
             InsideFuncForSigmoidFunction insideFuncForSigmoidFunction,
-            double[] weights,
-            double bias
+            Double[] weights,
+            Double bias
     ) {
-//        this.areWeightsCountEqualN(weights);
+//        this.areWeightsCountEqualN(scaledWeights);
 
         double loss = 0.0;
         if (this.outputs[iThData])
@@ -74,11 +74,11 @@ public class LogisticRegression {
 
     public double sigmoidFunction(
             InsideFuncForSigmoidFunction insideFuncForSigmoidFunction,
-            double[] iThInputValues,
-            double[] weights,
-            double bias
+            Double[] iThInputValues,
+            Double[] weights,
+            Double bias
     ){
-//        this.areWeightsCountEqualN(weights);
+//        this.areWeightsCountEqualN(scaledWeights);
 
         return 1. / (1. + Math.pow(
                 Math.E, -insideFuncForSigmoidFunction.insideFuncForSigmoidFunc(iThInputValues, weights, bias)

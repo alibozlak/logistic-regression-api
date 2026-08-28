@@ -1,6 +1,7 @@
 package dev.bozlak.logistic_regression_api.logistic_regression.use_linear_func;
 
-import dev.bozlak.logistic_regression_api.logistic_regression.dtos.responses.SuccessResponse;
+import dev.bozlak.logistic_regression_api.logistic_regression.dtos.responses.SuccessResponseBody;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,10 +18,14 @@ public class ApiEndpoint {
         this.apiService = apiService;
     }
 
-//    @PostMapping
-//    public ResponseEntity<SuccessResponse> trainModel(
-//            @RequestBody dev.bozlak.logistic_regression_api.logistic_regression.dtos.requests.RequestBody requestBody
-//    ) {
-//    }
+    @PostMapping
+    public ResponseEntity<SuccessResponseBody> trainModel(
+            @RequestBody dev.bozlak.logistic_regression_api.logistic_regression.dtos.requests.RequestBody requestBody
+    ) {
+        return new ResponseEntity<>(
+                this.apiService.trainModel(requestBody),
+                HttpStatus.OK
+        );
+    }
 
 }

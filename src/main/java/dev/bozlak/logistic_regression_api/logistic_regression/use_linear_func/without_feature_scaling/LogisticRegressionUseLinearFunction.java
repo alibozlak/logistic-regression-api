@@ -2,23 +2,23 @@ package dev.bozlak.logistic_regression_api.logistic_regression.use_linear_func.w
 
 import dev.bozlak.logistic_regression_api.logistic_regression.InsideFuncForSigmoidFunction;
 import dev.bozlak.logistic_regression_api.logistic_regression.LogisticRegression;
-import dev.bozlak.logistic_regression_api.logistic_regression.TrainedCoefficients;
+import dev.bozlak.logistic_regression_api.logistic_regression.ScaledTrainedCoefficients;
 
 public class LogisticRegressionUseLinearFunction extends LogisticRegression {
 
     private final InsideFuncForSigmoidFunction multivariateLinearFunction;
-    private double[] weights;
-    private double bias;
+    private Double[] weights;
+    private Double bias;
 
     /**
      * For Output array:
      * Let true === 1 class, false === 0 class
      */
     public LogisticRegressionUseLinearFunction(
-            double[][] inputs,
-            boolean[] outputs,
-            double[] initialWeights,
-            double initialBias
+            Double[][] inputs,
+            Boolean[] outputs,
+            Double[] initialWeights,
+            Double initialBias
     ) {
         super(inputs, outputs);
 //        super.areWeightsCountEqualN(initialWeights);
@@ -35,9 +35,9 @@ public class LogisticRegressionUseLinearFunction extends LogisticRegression {
         };
     }
 
-    public final TrainedCoefficients trainModelWithGradientDescent(double learningRate, int loopCount) {
+    public final ScaledTrainedCoefficients trainModelWithGradientDescent(double learningRate, int loopCount) {
         final int n = super.getN();
-        double[] tempCoefficients = new double[n];
+        Double[] tempCoefficients = new Double[n];
 
         for (int loopIndex = 0; loopIndex < loopCount ; loopIndex++) {
             for (int j = 0; j < n; j++) {
@@ -48,7 +48,7 @@ public class LogisticRegressionUseLinearFunction extends LogisticRegression {
             System.arraycopy(tempCoefficients, 0, this.weights, 0, n);
         }
 
-        return new TrainedCoefficients(this.weights, this.bias);
+        return new ScaledTrainedCoefficients(this.weights, this.bias);
     }
 
     /**
@@ -65,11 +65,11 @@ public class LogisticRegressionUseLinearFunction extends LogisticRegression {
         return this.dJ_dwj_or_db(super.getN());
     }
 
-    public double sigmoidFunction (double[] iThInputValues) {
+    public double sigmoidFunction (Double[] iThInputValues) {
         return this.sigmoidFunction(iThInputValues, this.weights, this.bias);
     }
 
-    private double sigmoidFunction(double[] iThInputValues, double[] weights, double bias) {
+    private double sigmoidFunction(Double[] iThInputValues, Double[] weights, Double bias) {
         return super.sigmoidFunction(this.multivariateLinearFunction, iThInputValues, weights, bias);
     }
 
@@ -77,7 +77,7 @@ public class LogisticRegressionUseLinearFunction extends LogisticRegression {
         return this.costFunction(this.weights, this.bias);
     }
 
-    public double costFunction(double[] weights, double bias) {
+    public double costFunction(Double[] weights, double bias) {
         return super.costFunction(this.multivariateLinearFunction, weights, bias);
     }
 
