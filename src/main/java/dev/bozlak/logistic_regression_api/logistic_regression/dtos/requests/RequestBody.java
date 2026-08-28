@@ -21,10 +21,13 @@ public class RequestBody {
     public static void validateRequestBody(
             Double[][] inputs, Boolean[] outputs, Double learningRate, Integer loopCount
     ) {
-        if (learningRate < 0 || learningRate > 1)
+        if (inputs.length == 0)
+            throw new ClientException("Input array must not be an empty!!");
+
+        if (learningRate == null || learningRate <= 0 || learningRate > 1)
             throw new ClientException("learningRate should be between (0,1] !! Yours = " + learningRate);
 
-        if (loopCount <= 0)
+        if (loopCount == null || loopCount <= 0)
             throw new ClientException("loopCount must be greater than 0 !! Yours = " + loopCount);
 
         final int m = inputs.length;
