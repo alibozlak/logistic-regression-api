@@ -12,15 +12,15 @@ public class RequestBody {
     public final Integer loopCount;
 
     public RequestBody(Double[][] inputs, Boolean[] outputs, Double learningRate, Integer loopCount) {
-        this.validateRequestBody(inputs, outputs, learningRate, loopCount);
-
         this.inputs = inputs;
         this.outputs = outputs;
         this.learningRate = learningRate;
         this.loopCount = loopCount;
     }
 
-    private void validateRequestBody(Double[][] inputs, Boolean[] outputs, Double learningRate, Integer loopCount) {
+    public static void validateRequestBody(
+            Double[][] inputs, Boolean[] outputs, Double learningRate, Integer loopCount
+    ) {
         if (learningRate < 0 || learningRate > 1)
             throw new ClientException("learningRate should be between (0,1] !! Yours = " + learningRate);
 

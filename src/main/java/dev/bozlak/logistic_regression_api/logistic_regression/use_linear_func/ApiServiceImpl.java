@@ -21,7 +21,10 @@ public class ApiServiceImpl implements ApiService {
     public SuccessResponseBody trainModel(RequestBody requestBody) {
         ScaledResult scaledResult = this.scalingService.scale(requestBody.inputs);
 
-        Double[] initialWeights = new Double[requestBody.outputs.length];
+        final int n = requestBody.inputs[0].length;
+        Double[] initialWeights = new Double[n];
+        for (int j = 0; j < n; j++)
+            initialWeights[j] = 0.;
 
         LogisticRegressionUseLinearFunction logisticRegressionUseLinearFunction = new LogisticRegressionUseLinearFunction(
                 scaledResult.scaledInputs, requestBody.outputs, initialWeights, 0.

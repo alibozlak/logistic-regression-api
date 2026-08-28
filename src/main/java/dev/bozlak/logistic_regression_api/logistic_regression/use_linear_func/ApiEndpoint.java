@@ -22,6 +22,10 @@ public class ApiEndpoint {
     public ResponseEntity<SuccessResponseBody> trainModel(
             @RequestBody dev.bozlak.logistic_regression_api.logistic_regression.dtos.requests.RequestBody requestBody
     ) {
+        dev.bozlak.logistic_regression_api.logistic_regression.dtos.requests.RequestBody.validateRequestBody(
+                requestBody.inputs, requestBody.outputs, requestBody.learningRate, requestBody.loopCount
+        );
+
         return new ResponseEntity<>(
                 this.apiService.trainModel(requestBody),
                 HttpStatus.OK
