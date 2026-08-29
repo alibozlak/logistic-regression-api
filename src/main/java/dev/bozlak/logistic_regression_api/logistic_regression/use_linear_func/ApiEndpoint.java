@@ -1,5 +1,7 @@
 package dev.bozlak.logistic_regression_api.logistic_regression.use_linear_func;
 
+import dev.bozlak.logistic_regression_api.logistic_regression.dtos.requests.PredictRequestBody;
+import dev.bozlak.logistic_regression_api.logistic_regression.dtos.requests.RequestBodyForTrain;
 import dev.bozlak.logistic_regression_api.logistic_regression.dtos.responses.SuccessResponseBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +20,31 @@ public class ApiEndpoint {
         this.apiService = apiService;
     }
 
-    @PostMapping
+    @PostMapping("/train")
     public ResponseEntity<SuccessResponseBody> trainModel(
-            @RequestBody dev.bozlak.logistic_regression_api.logistic_regression.dtos.requests.RequestBody requestBody
+            @RequestBody RequestBodyForTrain requestBodyForTrain
     ) {
-        dev.bozlak.logistic_regression_api.logistic_regression.dtos.requests.RequestBody.validateRequestBody(
-                requestBody.inputs, requestBody.outputs, requestBody.learningRate, requestBody.loopCount
+        RequestBodyForTrain.validateRequestBody(
+                requestBodyForTrain.inputs,
+                requestBodyForTrain.outputs,
+                requestBodyForTrain.learningRate,
+                requestBodyForTrain.loopCount
         );
 
         return new ResponseEntity<>(
-                this.apiService.trainModel(requestBody),
+                this.apiService.trainModel(requestBodyForTrain),
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/predict")
+    public ResponseEntity<Double> predict(@RequestBody PredictRequestBody predictRequestBody) {
+        int n = PredictRequestBody.validatePredictRequestBody(
+                predictRequestBody.scaledTrainedCoefficients, predictRequestBody.input
+        );
+
+        return new ResponseEntity<>(
+                this.apiService.predict(predictRequestBody, n),
                 HttpStatus.OK
         );
     }

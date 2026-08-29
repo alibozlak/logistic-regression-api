@@ -4,14 +4,14 @@ import dev.bozlak.logistic_regression_api.logistic_regression.exceptions.ClientE
 import dev.bozlak.logistic_regression_api.logistic_regression.exceptions.EachInputDatasNotSameSizeException;
 import dev.bozlak.logistic_regression_api.logistic_regression.exceptions.InputAndOutputCountMismatchException;
 
-public class RequestBody {
+public class RequestBodyForTrain {
 
     public final Double[][] inputs;
     public final Boolean[] outputs;
     public final Double learningRate;
     public final Integer loopCount;
 
-    public RequestBody(Double[][] inputs, Boolean[] outputs, Double learningRate, Integer loopCount) {
+    public RequestBodyForTrain(Double[][] inputs, Boolean[] outputs, Double learningRate, Integer loopCount) {
         this.inputs = inputs;
         this.outputs = outputs;
         this.learningRate = learningRate;

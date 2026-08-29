@@ -1,12 +1,11 @@
 package dev.bozlak.logistic_regression_api.logistic_regression.use_linear_func.without_feature_scaling;
 
-import dev.bozlak.logistic_regression_api.logistic_regression.InsideFuncForSigmoidFunction;
 import dev.bozlak.logistic_regression_api.logistic_regression.LogisticRegression;
 import dev.bozlak.logistic_regression_api.logistic_regression.ScaledTrainedCoefficients;
+import dev.bozlak.logistic_regression_api.logistic_regression.Utils;
 
 public class LogisticRegressionUseLinearFunction extends LogisticRegression {
 
-    private final InsideFuncForSigmoidFunction multivariateLinearFunction;
     private Double[] weights;
     private Double bias;
 
@@ -24,15 +23,6 @@ public class LogisticRegressionUseLinearFunction extends LogisticRegression {
 //        super.areWeightsCountEqualN(initialWeights);
         this.weights = initialWeights;
         this.bias = initialBias;
-
-        multivariateLinearFunction = (oneSampleInputArray, weights, bias) -> {
-            double result = 0.;
-            final int n = super.getN();
-            for (int j = 0; j < n; j++)
-                result += weights[j] * oneSampleInputArray[j];
-
-            return result + bias;
-        };
     }
 
     public final ScaledTrainedCoefficients trainModelWithGradientDescent(double learningRate, int loopCount) {
@@ -70,7 +60,7 @@ public class LogisticRegressionUseLinearFunction extends LogisticRegression {
     }
 
     private double sigmoidFunction(Double[] iThInputValues, Double[] weights, Double bias) {
-        return super.sigmoidFunction(this.multivariateLinearFunction, iThInputValues, weights, bias);
+        return Utils.sigmoidInsideLinearFunction(iThInputValues, weights, bias);
     }
 
     public double costFunction() {
@@ -78,7 +68,7 @@ public class LogisticRegressionUseLinearFunction extends LogisticRegression {
     }
 
     public double costFunction(Double[] weights, double bias) {
-        return super.costFunction(this.multivariateLinearFunction, weights, bias);
+        return super.costFunction(Utils.MULTIVARIATE_LINEAR_FUNCTION, weights, bias);
     }
 
     public byte convertBooleanToByte(boolean bool) {

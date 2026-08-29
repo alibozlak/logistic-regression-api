@@ -62,27 +62,14 @@ public class LogisticRegression {
         double loss = 0.0;
         if (this.outputs[iThData])
             loss = - Math.log(
-                    this.sigmoidFunction(insideFuncForSigmoidFunction, this.inputs[iThData], weights, bias)
+                    Utils.sigmoidFunction(insideFuncForSigmoidFunction, this.inputs[iThData], weights, bias)
             );
         else
             loss = - Math.log(
-                    1. - this.sigmoidFunction(insideFuncForSigmoidFunction, this.inputs[iThData], weights, bias)
+                    1. - Utils.sigmoidFunction(insideFuncForSigmoidFunction, this.inputs[iThData], weights, bias)
             );
 
         return loss;
-    }
-
-    public double sigmoidFunction(
-            InsideFuncForSigmoidFunction insideFuncForSigmoidFunction,
-            Double[] iThInputValues,
-            Double[] weights,
-            Double bias
-    ){
-//        this.areWeightsCountEqualN(scaledWeights);
-
-        return 1. / (1. + Math.pow(
-                Math.E, -insideFuncForSigmoidFunction.insideFuncForSigmoidFunc(iThInputValues, weights, bias)
-        ));
     }
 
     private int validateDatas(double[][] inputs, boolean[] outputs) {
