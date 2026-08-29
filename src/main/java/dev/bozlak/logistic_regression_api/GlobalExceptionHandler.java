@@ -2,9 +2,6 @@ package dev.bozlak.logistic_regression_api;
 
 import dev.bozlak.logistic_regression_api.logistic_regression.dtos.responses.ErrorResponse;
 import dev.bozlak.logistic_regression_api.logistic_regression.exceptions.ClientException;
-import dev.bozlak.logistic_regression_api.logistic_regression.exceptions.EachInputDatasNotSameSizeException;
-import dev.bozlak.logistic_regression_api.logistic_regression.exceptions.InputAndOutputCountMismatchException;
-import dev.bozlak.logistic_regression_api.logistic_regression.exceptions.WeightArraySizeandFeatureCountMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -29,12 +26,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler({
-            EachInputDatasNotSameSizeException.class,
-            InputAndOutputCountMismatchException.class,
-            WeightArraySizeandFeatureCountMismatchException.class,
-            ClientException.class
-    })
+    @ExceptionHandler({ ClientException.class })
     public ResponseEntity<ErrorResponse> handleClientException(ClientException clientException) {
 
         return new ResponseEntity<>(
@@ -61,7 +53,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleUnknownException(Exception exception) {
         return new ResponseEntity<>(
-                new ErrorResponse("Unknown Server Error!!"),
+                new ErrorResponse("Unknown or Unhandled Error!!"),
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
